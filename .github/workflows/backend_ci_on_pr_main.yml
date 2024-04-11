@@ -15,6 +15,10 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.12.2
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python -
+        echo "$HOME/.poetry/bin" >> $GITHUB_PATH
     - name: Install dependencies
       run: cd backend && poetry install
     - name: Format with black
