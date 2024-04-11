@@ -1,22 +1,22 @@
-FROM python:3.12 as base
-
-WORKDIR /app/
-COPY ./pyproject.toml ./poetry.lock* /app/
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONPATH=/app
+FROM python:3.12.0 as base
 
 RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python && \
     cd /usr/local/bin && \
     ln -s /opt/poetry/bin/poetry && \
     poetry config virtualenvs.create false
 
-FROM base AS alembic
-COPY ./alembic.ini /app/
-COPY ./alembic /app
-RUN bash -c "poetry install --no-root"
+WORKDIR /app/
+COPY ./pyproject.toml ./poetry.lock* /app/
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONPATH=/app
+
+# FROM base AS alembic
+# COPY ./alembic.ini /app/
+# COPY ./alembic /app
+# RUN bash -c "poetry install --no-root"
 
 FROM base as dev
-COPY ./alembic.ini /app/
+# COPY ./alembic.ini /app/
 COPY ./app /app/app
 EXPOSE 5678
 RUN bash -c "poetry install --no-root"
