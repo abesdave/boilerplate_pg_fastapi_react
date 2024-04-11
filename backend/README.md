@@ -1,6 +1,16 @@
 # Installing Dependencies:
-- Production: `poetry install --without dev,migrations`
-- Development: `poetry install`
-- Testing: `poetry install --without migrations`
-- Migrations: `poetry install --without dev`
+To see how poetry is used to install deps, look at the github workflows, backend dockerfile etc.
 
+# Alembic Migrations:
+
+- Create a new revision when new tables or updates are made:
+
+`alembic revision -m "create new revision"`
+
+- Run the migration:
+
+`alembic upgrade head`
+
+- Go back a version:
+
+`alembic downgrade -1 (or head?)`
