@@ -1,0 +1,29 @@
+name: Backend CI pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup python version (3.12.2)
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.12.2
+    - name: Install dependencies
+      run: cd backend && poetry install
+    - name: Format with black
+      run: cd backend && black ./app ./tests
+    - name: Lint with pylint
+      run: cd backend && pylint ./app ./tests
+    - name: Test with pytest
+      run: cd backend && pytest .
+    
+    
+    
+    
