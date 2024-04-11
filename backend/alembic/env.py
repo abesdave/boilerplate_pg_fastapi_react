@@ -6,6 +6,9 @@ from sqlalchemy import pool
 
 from alembic import context
 
+from app.core.database.models import Base, User, City
+
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 
@@ -14,11 +17,13 @@ config = context.config
 # here we allow ourselves to pass interpolation vars to alembic.ini
 # fron the host env
 section = config.config_ini_section
-config.set_section_option(section, "DB_USER", os.environ.get("DB_USER") or "")
-config.set_section_option(section, "DB_PASS", os.environ.get("DB_PASSWORD") or "")
-config.set_section_option(section, "DB_HOST", os.environ.get("DB_HOST") or "")
-config.set_section_option(section, "DB_PORT", os.environ.get("DB_PORT") or "")
-config.set_section_option(section, "DB_NAME", os.environ.get("DB_NAME") or "")
+config.set_section_option(section, "DB_USER", os.environ.get("DB_USER") or "postgres")
+config.set_section_option(
+    section, "DB_PASS", os.environ.get("DB_PASSWORD") or "postgres"
+)
+config.set_section_option(section, "DB_HOST", os.environ.get("DB_HOST") or "localhost")
+config.set_section_option(section, "DB_PORT", os.environ.get("DB_PORT") or "5432")
+config.set_section_option(section, "DB_NAME", os.environ.get("DB_NAME") or "app")
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -29,7 +34,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
+target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -50,6 +55,9 @@ def run_migrations_offline() -> None:
 
     """
     url = config.get_main_option("sqlalchemy.url")
+
+    print("----------- " + url)
+
     context.configure(
         url=url,
         target_metadata=target_metadata,
