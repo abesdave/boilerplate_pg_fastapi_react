@@ -3,6 +3,7 @@
 .pytest_cache
 .venv
 __pycache__
+alembic/__pycache__
 .pytest_cache
 
 database/data
