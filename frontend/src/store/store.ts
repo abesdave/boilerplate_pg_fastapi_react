@@ -1,4 +1,4 @@
-import { combineSlices, configureStore } from "@reduxjs/toolkit"
+import { Action, combineSlices, configureStore, ThunkAction } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
 import { counterSlice } from "./counterSlice"
 
@@ -24,3 +24,9 @@ export type AppStore = typeof store
 
 export type AppDispatch = AppStore["dispatch"]
 
+export type AppThunk<ThunkReturnType = void> = ThunkAction<
+  ThunkReturnType,
+  RootState,
+  unknown,
+  Action
+>

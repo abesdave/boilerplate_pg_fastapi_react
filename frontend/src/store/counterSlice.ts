@@ -1,5 +1,6 @@
 import type { PayloadAction } from "@reduxjs/toolkit"
 import { createAppSlice } from "./createAppSlice"
+import { AppThunk } from "./store"
 
 export interface CounterSliceState {
     value: number
@@ -56,3 +57,15 @@ export const counterSlice = createAppSlice({
 
 export const { decrement, increment, incrementByAmount, incrementAsync } = counterSlice.actions
 export const { selectCount, selectStatus } = counterSlice.selectors
+
+// We can also write thunks by hand, which may contain both sync and async logic.
+// Here's an example of conditionally dispatching actions based on current state.
+export const incrementIfOdd =
+  (amount: number): AppThunk =>
+  async (dispatch, getState) => {
+    const currentValue = await selectCount(getState())
+
+    if (currentValue % 2 === 1 || currentValue % 2 === -1) {
+      dispatch(incrementByAmount(amount))
+    }
+  }
