@@ -9,7 +9,7 @@ from sqlalchemy.orm import (
     Mapped,
 )
 
-from app.core.database.models.mixins import Timestamp
+from app.database.models.mixins import Timestamp
 
 
 class Role(Enum):
