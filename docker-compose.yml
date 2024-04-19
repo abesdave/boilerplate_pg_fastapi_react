@@ -10,8 +10,10 @@ services:
     volumes:
       - ./database/data:/var/lib/postgresql/data
       - ./database/scripts/init:/docker-entrypoint-initdb.d
-    env_file:
-      - ./backend/.env.dev
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=boilerplate_pg_fastapi_react
 
   backend:
     build:

@@ -6,7 +6,7 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from app.core.database.models.models import Base, User, City
+from app.database.models.models import Base, User, City
 
 
 # this is the Alembic Config object, which provides
@@ -17,13 +17,13 @@ config = context.config
 # here we allow ourselves to pass interpolation vars to alembic.ini
 # fron the host env
 section = config.config_ini_section
-config.set_section_option(section, "DB_USER", os.environ.get("DB_USER") or "postgres")
+config.set_section_option(section, "DB_USER", os.environ.get("DB_USER"))
+config.set_section_option(section, "DB_PASS", os.environ.get("DB_PASSWORD"))
+config.set_section_option(section, "DB_HOST", os.environ.get("DB_HOST"))
+config.set_section_option(section, "DB_PORT", os.environ.get("DB_PORT"))
 config.set_section_option(
-    section, "DB_PASS", os.environ.get("DB_PASSWORD") or "postgres"
+    section, "DB_NAME", os.environ.get("DB_NAME") or "boilerplate_pg_fastapi_react"
 )
-config.set_section_option(section, "DB_HOST", os.environ.get("DB_HOST") or "localhost")
-config.set_section_option(section, "DB_PORT", os.environ.get("DB_PORT") or "5432")
-config.set_section_option(section, "DB_NAME", os.environ.get("DB_NAME") or "app")
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
